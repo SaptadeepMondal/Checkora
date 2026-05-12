@@ -46,4 +46,30 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", () => togglePassword(input, btn));
     wrapper.appendChild(btn);
   });
+
+  const confirmPassword = document.querySelector(
+    'input[name="password2"]'
+  );
+  function showToast(message) {
+    let toast = document.querySelector(".auth-toast");
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.className = "auth-toast";
+      document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    toast.classList.add("show");
+    clearTimeout(toast.timeout);
+    toast.timeout = setTimeout(() => { toast.classList.remove("show"); }, 2500);
+  }
+  if (confirmPassword) {
+    confirmPassword.addEventListener("paste", (e) => {
+      e.preventDefault();
+      showToast("Please type your password manually.");
+    });
+    confirmPassword.setAttribute(
+      "title",
+      "Re-type your password here; pasting is disabled."
+    );
+  }
 });
